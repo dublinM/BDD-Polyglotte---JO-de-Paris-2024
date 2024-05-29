@@ -1,0 +1,153 @@
+--PostgreSQL: 
+
+--Création de la base de données : Paris Olympic Games
+
+Database: ParisOlympicGames
+
+DROP DATABASE IF EXISTS "ParisOlympicGames";
+
+CREATE DATABASE "ParisOlympicGames"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'French_France.utf8'
+    LC_CTYPE = 'French_France.utf8'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+--Création des Tables : Site, Event, Planning et Route
+
+DROP TABLE IF EXISTS Site;
+
+CREATE TABLE IF NOT EXISTS Site (
+    site_id varchar(255) PRIMARY KEY NOT NULL,
+    site_name varchar(255) NOT NULL,
+    isParalympic boolean NOT NULL,
+    address varchar(255) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS Event;
+
+CREATE TABLE IF NOT EXISTS Event (
+    event_id varchar(255) PRIMARY KEY NOT NULL,
+    date date NOT NULL,
+    description text,
+    name varchar(255) NOT NULL,
+    sport_id varchar(255) NOT NULL,
+    site_id varchar(255) NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES Site(site_id)
+);
+
+
+DROP TABLE IF EXISTS Planning;
+
+CREATE TABLE IF NOT EXISTS Planning (
+    planning_id varchar(255) PRIMARY KEY NOT NULL,
+    person_id varchar(255) NOT NULL,
+    event_id varchar(255) NOT NULL,
+    FOREIGN KEY (event_id) REFERENCES Event(event_id)
+);
+
+
+DROP TABLE IF EXISTS Route;
+
+CREATE TABLE IF NOT EXISTS Route (
+    route_id varchar(255) PRIMARY KEY NOT NULL,
+    person_id varchar(255) NOT NULL,
+    distance double NOT NULL,
+    time_route_car time ,
+	time_route_transport time
+);
+
+--Insertion des données :
+
+INSERT INTO Site (site_id, site_name, isParalympic, address) VALUES
+('site_001', 'Stade de France', TRUE, 'Saint-Denis, France'),
+('site_002', 'Parc des Princes', FALSE, 'Paris, France'),
+('site_003', 'AccorHotels Arena', TRUE, '8 Boulevard de Bercy, 75012 Paris, France'),
+('site_004', 'Roland Garros', FALSE, '2 Avenue Gordon Bennett, 75016 Paris, France'),
+('site_005', 'Château de Versailles', FALSE, 'Place d\'Armes, 78000 Versailles, France'),
+('site_006', 'Grand Palais', TRUE, '3 Avenue du Général Eisenhower, 75008 Paris, France'),
+('site_007', 'La Défense Arena', TRUE, '99 Jardins de l\'Arche, 92000 Nanterre, France'),
+('site_008', 'Stade Pierre-Mauroy', TRUE, '261 Boulevard de Tournai, 59650 Villeneuve-d\'Ascq, France'),
+('site_009', 'Stade Vélodrome', TRUE, '3 Boulevard Michelet, 13008 Marseille, France'),
+('site_010', 'Eiffel Tower Stadium', FALSE, 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France');
+
+
+
+DROP TABLE IF EXISTS Event;
+
+CREATE TABLE IF NOT EXISTS Event (
+    event_id varchar(255) PRIMARY KEY NOT NULL,
+    date date NOT NULL,
+    description text,
+    name varchar(255) NOT NULL,
+    sport_id varchar(255) NOT NULL,
+    site_id varchar(255) NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES Site(site_id)
+);
+
+INSERT INTO Event (event_id, date, description, name, sport_id, site_id) VALUES
+-- Events for Swimming (Sport01)
+('event_001', '2024-07-25', '100m Freestyle Men', '100m Freestyle Men Finals', 'Sport01', 'site_007'),
+('event_002', '2024-07-26', '100m Freestyle Women', '100m Freestyle Women Finals', 'Sport01', 'site_007'),
+
+-- Events for Golf (Sport02)
+('event_003', '2024-07-28', '18-Hole Men', 'Golf Men Finals', 'Sport02', 'site_005'),
+('event_004', '2024-07-29', '18-Hole Women', 'Golf Women Finals', 'Sport02', 'site_005'),
+
+-- Events for 100m Sprint (Sport03)
+('event_005', '2024-08-01', '100m Sprint Men', '100m Sprint Men Finals', 'Sport03', 'site_001'),
+('event_006', '2024-08-02', '100m Sprint Women', '100m Sprint Women Finals', 'Sport03', 'site_001'),
+
+-- Events for 800m Freestyle (Sport04)
+('event_007', '2024-08-05', '800m Freestyle Women', '800m Freestyle Women Finals', 'Sport04', 'site_007'),
+
+-- Events for Gymnastics - All-Around (Sport05)
+('event_008', '2024-08-10', 'All-Around Men', 'Gymnastics All-Around Men Finals', 'Sport05', 'site_003'),
+('event_009', '2024-08-11', 'All-Around Women', 'Gymnastics All-Around Women Finals', 'Sport05', 'site_003');
+
+INSERT INTO Planning (planning_id, person_id, event_id) VALUES
+('plan_001', 'Pers01', 'event_001'),
+('plan_002', 'Pers01', 'event_002'),
+('plan_003', 'Pers02', 'event_003'),
+('plan_004', 'Pers02', 'event_004'),
+('plan_005', 'Pers03', 'event_005'),
+('plan_006', 'Pers04', 'event_006'),
+('plan_007', 'Pers05', 'event_007'),
+('plan_008', 'Pers06', 'event_005'),
+('plan_009', 'Pers07', 'event_001'),
+('plan_010', 'Pers08', 'event_008'),
+('plan_011', 'Pers09', 'event_009'),
+('plan_012', 'Pers10', 'event_001'),
+('plan_013', 'Pers11', 'event_002'),
+('plan_014', 'Pers12', 'event_003'),
+('plan_015', 'Pers13', 'event_004'),
+('plan_016', 'Pers14', 'event_005'),
+('plan_018', 'Pers01', 'event_006'),
+('plan_017', 'Pers15', 'event_006');
+
+
+
+INSERT INTO Route (route_id, person_id, distance, time_route_car, time_route_transport) VALUES
+('route_001', 'Pers01', 12.5, '00:20:00', '00:35:00'),
+('route_002', 'Pers01', 8.3, '00:15:00', '00:25:00'),
+('route_003', 'Pers02', 15.0, '00:25:00', '00:40:00'),
+('route_004', 'Pers02', 20.7, '00:30:00', '00:45:00'),
+('route_005', 'Pers03', 5.2, '00:10:00', '00:20:00'),
+('route_006', 'Pers04', 11.4, '00:18:00', '00:30:00'),
+('route_007', 'Pers05', 7.9, '00:12:00', '00:22:00'),
+('route_008', 'Pers06', 18.2, '00:28:00', '00:38:00'),
+('route_009', 'Pers07', 22.5, '00:35:00', '00:50:00'),
+('route_010', 'Pers08', 14.0, '00:22:00', '00:32:00'),
+('route_011', 'Pers09', 16.7, '00:26:00', '00:36:00'),
+('route_012', 'Pers10', 9.8, '00:14:00', '00:24:00'),
+('route_013', 'Pers11', 6.5, '00:10:00', '00:18:00'),
+('route_014', 'Pers12', 13.1, '00:20:00', '00:30:00'),
+('route_015', 'Pers13', 21.0, '00:32:00', '00:45:00'),
+('route_016', 'Pers14', 17.3, '00:27:00', '00:37:00'),
+('route_017', 'Pers15', 10.4, '00:16:00', '00:26:00');

@@ -1,0 +1,99 @@
+--Requêtes :
+
+Quels sont les sites olympiques utilisés pendant les jeux paralympiques ?
+
+SELECT * FROM Site
+WHERE isParalympic = TRUE;
+
+--------------------------------------------------------------------------
+Quels sont les différents sites sportifs proposant un sport donné ?
+
+db.Sport.find({"name": "100m Sprint"}, {"sport_id": 1, "_id": 0})
+
+SELECT DISTINCT Site.site_name
+FROM Site
+JOIN Event ON Site.site_id = Event.site_id
+WHERE Event.sport_id = 'Sport03';
+
+--------------------------------------------------------------------------
+Quels sont les sports associés à un site olympique donné ?
+
+SELECT DISTINCT Event.name AS sport_name
+FROM Event
+JOIN Site ON Event.site_id = Site.site_id
+WHERE Site.site_name = 'Stade de France';
+
+--------------------------------------------------------------------------
+Quel est le calendrier olympique d’un sport donné ?
+
+SELECT Event.name AS event_name, Event.date, Site.site_name
+FROM Event
+JOIN Site ON Event.site_id = Site.site_id
+WHERE Event.sport_id = 'Sport05'
+ORDER BY Event.date;
+
+
+--------------------------------------------------------------------------
+Quels sont les sports et les sites associés que l’on peut voir à une date donnée ?
+
+SELECT Event.name AS sport_name, Site.site_name
+FROM Event
+JOIN Site ON Event.site_id = Site.site_id
+WHERE Event.date = '2024-07-28'
+ORDER BY Site.site_name, Event.name;
+
+--------------------------------------------------------------------------
+Quelle est la distance et le temps de trajet entre deux sites donnés ?
+
+MATCH (site1:Location {name: 'Capitole'}), (site2:Location {name: 'Basilique Notre-Dame de Fourvière'}),
+      path = shortestPath((site1)-[:CONNECTED_TO*]-(site2))
+      
+WITH site1, site2, path,
+ 
+     [r IN relationships(path) | r.distance] AS distances,
+     [r IN relationships(path) | r.time_minutes] AS times
+     
+RETURN 
+
+     site1.name AS Start,
+     site2.name AS Destination,
+     REDUCE(s = 0, d IN distances | s + d) AS TotalDistance,
+     REDUCE(s = 0, t IN times | s + t) AS TotalTime;
+     
+
+----------------------------------------------------------------------------
+Pour un planning donné (une liste de dates associées à des épreuves sportives et des sites olympiques) d’un spectateur ou d’un journaliste, indiquer le temps de trajet total ?
+
+
+SELECT e.date, s.site_id, s.site_name
+FROM Planning p
+JOIN Event e ON p.event_id = e.event_id
+JOIN Site s ON e.site_id = s.site_id
+WHERE p.person_id = 'Pers01'
+ORDER BY e.date;
+
+
+// Liste des sites et des transitions, pré-filtrée pour éviter les redondances
+WITH [
+    {location_id: 'Loc001', date: '2024-07-25'}, 
+    {location_id: 'Loc001', date: '2024-07-26'}, 
+    {location_id: 'Loc006', date: '2024-08-02'}
+] AS visits
+
+// Extraction des transitions uniques entre différents sites
+UNWIND range(0, size(visits)-2) AS idx
+WITH visits[idx] AS start, visits[idx + 1] AS end
+WHERE start.location_id <> end.location_id  // Ne calculer que si le site change
+
+// Correspondance des locations dans Neo4J
+MATCH (startLocation:Location {location_id: start.location_id}),
+      (endLocation:Location {location_id: end.location_id})
+
+// Recherche du chemin le plus court
+MATCH path = shortestPath((startLocation)-[:CONNECTED_TO*]-(endLocation))
+WITH path,
+     [r IN relationships(path) | r.time_minutes] AS times
+
+// Calcul et retour du temps de trajet total
+RETURN 
+    SUM(REDUCE(s = 0, t IN times | s + t)) AS TotalTravelTime;

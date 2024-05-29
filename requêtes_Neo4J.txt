@@ -1,0 +1,39 @@
+-- Neo4J:
+
+
+--Creation des Locations :
+
+CREATE (:Location {location_id: 'Loc001', latitude: 48.8566, longitude: 2.3522, city: 'Paris', name: 'Eiffel Tower', department: 'Île-de-France', transport_network_id: 'TN001'})
+CREATE (:Location {location_id: 'Loc002', latitude: 43.6045, longitude: 1.4442, city: 'Toulouse', name: 'Capitole', department: 'Haute-Garonne', transport_network_id: 'TN002'})
+CREATE (:Location {location_id: 'Loc003', latitude: 43.7102, longitude: 7.2620, city: 'Nice', name: 'Promenade des Anglais', department: 'Alpes-Maritimes', transport_network_id: 'TN003'})
+CREATE (:Location {location_id: 'Loc004', latitude: 48.8566, longitude: 2.3522, city: 'Paris', name: 'Louvre Museum', department: 'Île-de-France', transport_network_id: 'TN001'})
+CREATE (:Location {location_id: 'Loc005', latitude: 45.7640, longitude: 4.8357, city: 'Lyon', name: 'Basilique Notre-Dame de Fourvière', department: 'Rhône', transport_network_id: 'TN004'})
+CREATE (:Location {location_id: 'Loc006', latitude: 49.7640, longitude: 3.8357, city: 'Paris', name: 'Saint Denis', department: 'Île-de-France', transport_network_id: 'TN001'})
+
+
+--Creation des relations de distance entre les locations.
+
+MATCH (a:Location), (b:Location)
+WHERE id(a) < id(b) // Évitez de créer des relations en double
+CREATE (a)-[:CONNECTED_TO {
+  distance: point.distance(point({latitude: a.latitude, longitude: a.longitude}), point({latitude: b.latitude, longitude: b.longitude})),
+  time_minutes: point.distance(point({latitude: a.latitude, longitude: a.longitude}), point({latitude: b.latitude, longitude: b.longitude})) / 833.333 // Convertit la distance en mètres en minutes en assumant une vitesse de 50 km/h
+}]->(b)
+
+--Creation TransportNetwork :
+
+CREATE (:TransportNetwork {network_id: 'TN001', latitude: 48.8566, longitude: 2.3522, city: 'Paris', name: 'Gare du Nord', transport_type: 'Train', name_line: 'RER B'})
+CREATE (:TransportNetwork {network_id: 'TN002', latitude: 43.6045, longitude: 1.4442, city: 'Toulouse', name: 'Toulouse-Matabiau station', transport_type: 'Train', name_line: 'Intercity'})
+CREATE (:TransportNetwork {network_id: 'TN003', latitude: 43.7102, longitude: 7.2620, city: 'Nice', name: 'Nice-Ville station', transport_type: 'Train', name_line: 'TER PACA'})
+CREATE (:TransportNetwork {network_id: 'TN004', latitude: 48.8352, longitude: 2.3699, city: 'Paris', name: 'Gare de Lyon', transport_type: 'Train', name_line: 'Lyon Marseille'})
+
+
+--Creation de la relation entre stations/gare et les Locations (des sites/personnes) :
+
+MATCH (l:Location), (t:TransportNetwork)
+WHERE point.distance(point({latitude: l.latitude, longitude: l.longitude}), point({latitude: t.latitude, longitude: t.longitude})) < 5000
+CREATE (l)-[:NEARBY {
+  distance: point.distance(point({latitude: l.latitude, longitude: l.longitude}), point({latitude: t.latitude, longitude: t.longitude})),
+  time_minutes: point.distance(point({latitude: l.latitude, longitude: l.longitude}), point({latitude: t.latitude, longitude: t.longitude})) / 833.333 // Convertit la distance en mètres en minutes en assumant une vitesse de 50 km/h
+}]->(t)
+

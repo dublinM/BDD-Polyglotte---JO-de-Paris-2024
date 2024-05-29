@@ -1,0 +1,563 @@
+--MongoDB: using mongosh (MongoDB Shell)
+
+--Configuration du server et de la base de donnée :
+
+Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://localhost:27017/
+
+show dbs
+
+use ParisOlympicGames
+
+--Creation des collections :
+
+db.createCollection("Sport")
+db.createCollection("Person")
+db.createCollection("LogSession")
+db.createCollection("LogPlanning")
+
+--Requêtes d'insertions pour la collection Person
+
+db.Person.insertOne({
+  person_id: "Pers01",
+  first_name: "John",
+  last_name: "Doe",
+  email: "john.doe@example.com",
+  address: "123 Rue de paris, Versailles, France, USA",
+  role: "Spectator",
+  age: 30,
+  date_of_birth: new Date("1993-01-01"),
+  company: null,
+  personal_record: null,
+  nationality: "American"
+})
+
+
+db.Person.insertMany([
+  {
+    person_id: "Pers02",
+    first_name: "Pierre",
+    last_name: "Dupont",
+    email: "pierre.dupont@example.com",
+    address: "456 Rue de Paris, Versailles, France",
+    role: "Spectator",
+    age: 45,
+    date_of_birth: new Date("1979-05-15"),
+    company: null,
+    personal_record: null,
+    nationality: "French"
+  },
+  {
+    person_id: "Pers03",
+    first_name: "Marie",
+    last_name: "Lefevre",
+    email: "marie.lefevre@example.com",
+    address: "789 Avenue de la République, Paris, France",
+    role: "Spectator",
+    age: 28,
+    date_of_birth: new Date("1996-09-03"),
+    company: null,
+    personal_record: null,
+    nationality: "French"
+  },
+  {
+    person_id: "Pers04",
+    first_name: "Emily",
+    last_name: "Smith",
+    email: "emily.smith@example.com",
+    address: "10 Rue de la Paix, Paris, France",
+    role: "Spectator",
+    age: 35,
+    date_of_birth: new Date("1987-11-20"),
+    company: null,
+    personal_record: null,
+    nationality: "American"
+  },
+  {
+    person_id: "Pers05",
+    first_name: "Michael",
+    last_name: "Johnson",
+    email: "michael.johnson@example.com",
+    address: "20 Rue du Faubourg Saint-Honoré, Paris, France",
+    role: "Spectator",
+    age: 50,
+    date_of_birth: new Date("1972-03-10"),
+    company: null,
+    personal_record: null,
+    nationality: "American"
+  },
+  {
+    person_id: "Pers06",
+    first_name: "Carlos",
+    last_name: "Gonzalez",
+    email: "carlos.gonzalez@example.com",
+    address: "Olympic Village, Saint-Denis, France",
+    role: "Athlete",
+    age: 28,
+    date_of_birth: new Date("1996-07-18"),
+    company: null,
+    personal_record: 9.81,
+    nationality: "Spanish",
+    sport: "Track and Field"
+  },
+  {
+    person_id: "Pers07",
+    first_name: "Hiroshi",
+    last_name: "Tanaka",
+    email: "hiroshi.tanaka@example.com",
+    address: "Olympic Village, Saint-Ouen, France",
+    role: "Athlete",
+    age: 32,
+    date_of_birth: new Date("1990-12-25"),
+    company: null,
+    personal_record: 47.84,
+    nationality: "Japanese",
+    sport: "Swimming"
+  },
+  {
+    person_id: "Pers08",
+    first_name: "Elena",
+    last_name: "Kuznetsova",
+    email: "elena.kuznetsova@example.com",
+    address: "Olympic Village, L'Île-Saint-Denis, France",
+    role: "Athlete",
+    age: 26,
+    date_of_birth: new Date("1998-04-05"),
+    company: null,
+    personal_record: 15.9,
+    nationality: "Russian",
+    sport: "Gymnastics"
+  },
+  {
+    person_id: "Pers09",
+    first_name: "Chen",
+    last_name: "Wei",
+    email: "chen.wei@example.com",
+    address: "Olympic Village, Saint-Denis, France",
+    role: "Athlete",
+    age: 30,
+    date_of_birth: new Date("1994-08-12"),
+    company: null,
+    personal_record: 98.5,
+    nationality: "Chinese",
+    sport: "Diving"
+  },
+  {
+    person_id: "Pers10",
+    first_name: "Emma",
+    last_name: "Jones",
+    email: "emma.jones@example.com",
+    address: "30 Boulevard Haussmann, Paris, France",
+    role: "Journalist",
+    age: 40,
+    date_of_birth: new Date("1982-06-28"),
+    company: "CNN",
+    personal_record: null,
+    nationality: "British"
+  },
+  {
+    person_id: "Pers11",
+    first_name: "Pablo",
+    last_name: "Garcia",
+    email: "pablo.garcia@example.com",
+    address: "40 Rue du Faubourg Saint-Honoré, Paris, France",
+    role: "Journalist",
+    age: 35,
+    date_of_birth: new Date("1987-09-15"),
+    company: "BBC",
+    personal_record: null,
+    nationality: "Spanish"
+  },
+  {
+    person_id: "Pers12",
+    first_name: "Yumi",
+    last_name: "Sato",
+    email: "yumi.sato@example.com",
+    address: "50 Avenue des Champs-Élysées, Paris, France",
+    role: "Journalist",
+    age: 38,
+    date_of_birth: new Date("1984-03-20"),
+    company: "NHK",
+    personal_record: null,
+    nationality: "Japanese"
+  },
+  {
+    person_id: "Pers13",
+    first_name: "Sophie",
+    last_name: "Leclerc",
+    email: "sophie.leclerc@example.com",
+    address: "60 Rue de Rivoli, Paris, France",
+    role: "Journalist",
+    age: 33,
+    date_of_birth: new Date("1989-11-10"),
+    company: "Le Monde",
+    personal_record: null,
+    nationality: "French"
+  },
+  {
+    person_id: "Pers14",
+    first_name: "Max",
+    last_name: "Müller",
+    email: "max.mueller@example.com",
+    address: "70 Rue de Rivoli, Paris, France",
+    role: "Journalist",
+    age: 45,
+    date_of_birth: new Date("1977-08-25"),
+    company: "Der Spiegel",
+    personal_record: null,
+    nationality: "German"
+  },
+  {
+    person_id: "Pers15",
+    first_name: "Maria",
+    last_name: "Rossi",
+    email: "maria.rossi@example.com",
+    address: "80 Rue de Rivoli, Paris, France",
+    role: "Journalist",
+    age: 37,
+    date_of_birth: new Date("1985-04-30"),
+    company: "La Repubblica",
+    personal_record: null,
+    nationality: "Italian"
+  }
+])
+
+--Requêtes d'insertion pour la colletion Sport :
+
+
+db.Sport.insertOne({
+  sport_id: "Sport01",
+  name: "Swimming",
+  category: "Aquatic",
+  description: "Swimming is a water-based sport where participants propel themselves through the water using their limbs.",
+  yardage: null,
+  records: {
+    record_id: "Rec01",
+    gender: "Men",
+    holder: "Michael Phelps",
+    type: "Olympic Record",
+    obtained_date: new Date("2008-08-16"),
+    score: 1.52  // Placeholder value, can be adjusted according to the actual score
+  },
+  distance: "100m",
+  stroke: "Freestyle"
+})
+
+db.Sport.insertOne({
+  sport_id: "Sport02",
+  name: "Golf",
+  category: "Outdoor",
+  description: "Golf is a club-and-ball sport in which players use various clubs to hit balls into a series of holes on a course in as few strokes as possible.",
+  yardage: 7000, // Yardage for a typical golf course
+  records: {
+    record_id: "Rec02",
+    gender: "Men",
+    holder: "Tiger Woods",
+    type: "World Record",
+    obtained_date: new Date("2000-04-10"),
+    score: -18  // Example score for a round of golf
+  },
+  course_type: "18-hole",
+  par: 72
+})
+
+db.Sport.insertMany([
+  {
+    sport_id: "Sport03",
+    name: "100m Sprint",
+    category: "Athletics",
+    description: "Athletics is a collection of sporting events that involve competitive running, jumping, throwing, and walking.",
+    yardage: null,
+    records: [
+      {
+        record_id: "Rec03",
+        gender: "Male",
+        type: "World Record",
+        holder: "Usain Bolt",
+        obtained_date: new Date("2009-08-16"),
+        score: null  // No specific score for athletics
+      },
+      {
+        record_id: "Rec04",
+        gender: "Male",
+        type: "Olympic Record",
+        holder: "Usain Bolt",
+        obtained_date: new Date("2008-08-16"),
+        score: null  // No specific score for athletics
+      }
+    ],
+    surface: "Track",
+    gender: "Male",
+    team_sport: false
+  },
+  {
+    sport_id: "Sport03",
+    name: "100m Sprint",
+    category: "Athletics",
+    description: "Athletics is a collection of sporting events that involve competitive running, jumping, throwing, and walking.",
+    yardage: null,
+    records: [
+      {
+        record_id: "Rec05",
+        gender: "Female",
+        type: "World Record",
+        holder: "Florence Griffith-Joyner",
+        obtained_date: new Date("1988-07-16"),
+        score: null  // No specific score for athletics
+      },
+      {
+        record_id: "Rec06",
+        gender: "Female",
+        type: "Olympic Record",
+        holder: "Florence Griffith-Joyner",
+        obtained_date: new Date("1988-07-16"),
+        score: null  // No specific score for athletics
+      }
+    ],
+    surface: "Track",
+    gender: "Female",
+    team_sport: false
+  },
+  {
+    sport_id: "Sport04",
+    name: "800m Freestyle",
+    category: "Aquatic",
+    description: "Swimming is a water-based sport where participants propel themselves through the water using their limbs.",
+    yardage: null,
+    records: [
+      {
+        record_id: "Rec07",
+        gender: "Female",
+        type: "World Record",
+        holder: "Katie Ledecky",
+        obtained_date: new Date("2016-08-12"),
+        score: 8.04  // Placeholder value for the 800m freestyle
+      },
+      {
+        record_id: "Rec08",
+        gender: "Female",
+        type: "Olympic Record",
+        holder: "Katie Ledecky",
+        obtained_date: new Date("2016-08-12"),
+        score: 8.04  // Placeholder value for the 800m freestyle
+      }
+    ],
+    stroke: "Freestyle",
+    gender: "Female",
+    team_sport: false
+  },
+  {
+    sport_id: "Sport05",
+    name: "Gymnastics - All-Around",
+    category: "Individual",
+    description: "Gymnastics is a sport that includes exercises requiring balance, strength, flexibility, agility, coordination, and endurance.",
+    yardage: null,
+    records: [
+      {
+        record_id: "Rec09",
+        gender: "Male",
+        type: "World Record",
+        holder: "Kohei Uchimura",
+        obtained_date: new Date("2016-08-10"),
+        score: 16.1  // Placeholder value for the all-around
+      },
+      {
+        record_id: "Rec10",
+        gender: "Male",
+        type: "Olympic Record",
+        holder: "Kohei Uchimura",
+        obtained_date: new Date("2016-08-10"),
+        score: 16.1  // Placeholder value for the all-around
+      }
+    ],
+    surface: "Mat",
+    gender: "Male",
+    team_sport: false
+  },
+  {
+    sport_id: "Sport05",
+    name: "Gymnastics - All-Around",
+    category: "Individual",
+    description: "Gymnastics is a sport that includes exercises requiring balance, strength, flexibility, agility, coordination, and endurance.",
+    yardage: null,
+    records: [
+      {
+        record_id: "Rec11",
+        gender: "Female",
+        type: "World Record",
+        holder: "Simone Biles",
+        obtained_date: new Date("2019-10-13"),
+        score: 16.1  // Placeholder value for the all-around
+      },
+      {
+        record_id: "Rec12",
+        gender: "Female",
+        type: "Olympic Record",
+        holder: "Simone Biles",
+        obtained_date: new Date("2016-08-11"),
+        score: 16.1  // Placeholder value for the all-around
+      }
+    ],
+    surface: "Mat",
+    gender: "Female",
+    team_sport: false
+  }
+])
+
+
+db.LogSession.insertOne({
+  log_session_id: "Log001",
+  session_id: "Session001",
+  event_type: "Login",
+  log_description: "User logged in successfully.",
+  service_description: "Authentication service",
+  timestamps: new Date()
+})
+
+
+
+db.LogSession.insertMany([
+  {
+    log_session_id: "Log002",
+    session_id: "Session002",
+    event_type: "Logout",
+    log_description: "User logged out.",
+    service_description: "Authentication service",
+    timestamps: new Date()
+  },
+  {
+    log_session_id: "Log003",
+    session_id: "Session003",
+    event_type: "Error",
+    log_description: "Failed to authenticate user.",
+    service_description: "Authentication service",
+    timestamps: new Date("2024-05-30T22:15:00Z")
+  },
+  {
+    log_session_id: "Log004",
+    session_id: "Session004",
+    event_type: "Info",
+    log_description: "User requested password reset.",
+    service_description: "Authentication service",
+    timestamps: new Date("2024-05-20T10:20:00Z")
+  },
+  {
+    log_session_id: "Log005",
+    session_id: "Session005",
+    event_type: "Error",
+    log_description: "Database connection error.",
+    service_description: "Database service",
+    timestamps: new Date()
+  },
+  {
+    log_session_id: "Log006",
+    session_id: "Session006",
+    event_type: "Warning",
+    log_description: "Disk space is running low.",
+    service_description: "Server monitoring service",
+    timestamps: new Date("2024-05-26T15:15:00Z")
+  },
+  {
+    log_session_id: "Log007",
+    session_id: "Session007",
+    event_type: "Info",
+    log_description: "New user registered.",
+    service_description: "User management service",
+    timestamps: new Date("2024-05-26T08:30:64Z")
+  }
+])
+
+
+
+db.LogPlanning.insertOne({
+  log_planning_id: "LogPlan001",
+  timestamps: ISODate(),
+  log_description: "Event planning updated successfully.",
+  event_type: "Update",
+  service_type: "Event Planning Service",
+  planning_id: "Plan001"
+})
+
+
+db.LogPlanning.insertMany([
+  {
+    log_planning_id: "LogPlan002",
+    timestamps: ISODate(),
+    log_description: "New event added to the planning.",
+    event_type: "Addition",
+    service_type: "Event Planning Service",
+    planning_id: "Plan001"
+  },
+  {
+    log_planning_id: "LogPlan003",
+    timestamps: ISODate(),
+    log_description: "Event canceled.",
+    event_type: "Cancellation",
+    service_type: "Event Planning Service",
+    planning_id: "Plan002"
+  },
+  {
+    log_planning_id: "LogPlan004",
+    timestamps: ISODate(),
+    log_description: "Event time changed.",
+    event_type: "Modification",
+    service_type: "Event Planning Service",
+    planning_id: "Plan003"
+  },
+  {
+    log_planning_id: "LogPlan005",
+    timestamps: ISODate(),
+    log_description: "Venue updated.",
+    event_type: "Update",
+    service_type: "Event Planning Service",
+    planning_id: "Plan004"
+  },
+  {
+    log_planning_id: "LogPlan006",
+    timestamps: ISODate(),
+    log_description: "New staff assigned to the event.",
+    event_type: "Assignment",
+    service_type: "Event Planning Service",
+    planning_id: "Plan005"
+  },
+  {
+    log_planning_id: "LogPlan007",
+    timestamps: ISODate(),
+    log_description: "Event status changed to completed.",
+    event_type: "Completion",
+    service_type: "Event Planning Service",
+    planning_id: "Plan006"
+  },
+  {
+    log_planning_id: "LogPlan008",
+    timestamps: ISODate(),
+    log_description: "Event postponed.",
+    event_type: "Postponement",
+    service_type: "Event Planning Service",
+    planning_id: "Plan007"
+  },
+  {
+    log_planning_id: "LogPlan009",
+    timestamps: ISODate(),
+    log_description: "New event added to the planning.",
+    event_type: "Addition",
+    service_type: "Event Planning Service",
+    planning_id: "Plan001"
+  },
+  {
+    log_planning_id: "LogPlan010",
+    timestamps: ISODate(),
+    log_description: "Event canceled.",
+    event_type: "Cancellation",
+    service_type: "Event Planning Service",
+    planning_id: "Plan001"
+  },
+  {
+    log_planning_id: "LogPlan011",
+    timestamps: ISODate(),
+    log_description: "Event time changed.",
+    event_type: "Modification",
+    service_type: "Event Planning Service",
+    planning_id: "Plan001"
+  }
+])
+

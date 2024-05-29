@@ -1,0 +1,129 @@
+--Redis:
+
+--Notifications : 
+
+HSET notification:notification_id_1 planning_id "Plan001" content "Time to go !" timestamps "2024-05-26T12:00:00Z"
+HGETALL notification:notification_id_1
+> 1) "planning_id"
+  2) "Plan001"
+  3) "content"
+  4) "Time to go !"
+  5) "timestamps"
+  6) "2024-05-26T12:00:00Z"
+  
+HSET notification:notification_id_2 planning_id "Plan002" content "Another connexion device detected" timestamps "2024-05-26T12:15:00Z"
+HGETALL notification:notification_id_2
+> 1) "planning_id"
+  2) "Plan002"
+  3) "content"
+  4) "Another connexion device detected"
+  5) "timestamps"
+  6) "2024-05-26T12:15:00Z"
+  
+
+# Notification pour le planning_id "Plan001"
+HSET notification:notification_id_3 planning_id "Plan001" content "Reminder: Opening ceremony tonight at 8 PM! Don't miss it!" timestamps "2024-07-26T17:00:00Z"
+
+# Notification pour le planning_id "Plan001"
+HSET notification:notification_id_4 planning_id "Plan001" content "Stay tuned for live updates and results from today's swimming events 🏊‍♂️🏅" timestamps "2024-07-27T09:00:00Z"
+
+# Notification pour le planning_id "Plan002"
+HSET notification:notification_id_5 planning_id "Plan002" content "Get ready for an exciting day of track and field events at the Stade de France! 🏃‍♂️🏟️" timestamps "2024-07-28T12:00:00Z"
+
+# Notification pour le planning_id "Plan003"
+HSET notification:notification_id_6 planning_id "Plan003" content "Reminder: Check out the latest medal tally to see how your country is doing! 🏅🌍" timestamps "2024-07-29T10:00:00Z"
+
+# Notification pour le planning_id "Plan004"
+HSET notification:notification_id_7 planning_id "Plan004" content "Time to support your favorite athletes in the gymnastics finals! 🤸‍♂️🏆" timestamps "2024-07-30T15:00:00Z"
+
+# Notification pour le planning_id "Plan005"
+HSET notification:notification_id_8 planning_id "Plan005" content "Don't forget to catch the thrilling basketball showdown at the Palais Omnisports de Paris-Bercy! 🏀🔥" timestamps "2024-07-31T18:00:00Z"
+
+# Notification pour le planning_id "Plan006"
+HSET notification:notification_id_9 planning_id "Plan006" content "Stay updated on the latest news and highlights with our live coverage of the Paris 2024 Olympics! 📰📺" timestamps "2024-08-01T09:30:00Z"
+
+# Notification pour le planning_id "Plan007"
+HSET notification:notification_id_10 planning_id "Plan007" content "Alert: Schedule change for the cycling events due to weather conditions. Stay informed! 🚴‍♂️⚠️" timestamps "2024-08-02T14:00:00Z"
+
+# Notification pour le planning_id "Plan007"
+HSET notification:notification_id_11 planning_id "Plan007" content "Catch the thrilling action of the beach volleyball matches at the Champ de Mars! 🏐🏖️" timestamps "2024-08-03T11:00:00Z"
+
+# Notification pour le planning_id "Plan008"
+HSET notification:notification_id_12 planning_id "Plan008" content "Reminder: Last day to purchase tickets for the closing ceremony! 🎟️🎉 Don't miss out!" timestamps "2024-08-04T16:30:00Z"
+
+
+--Users :
+
+
+# Ajouter un utilisateur pour John Doe
+HSET user:Pers01 user_name "John.Doe" password "$2a$12$9bN6e4VusyRg0xVWyQxGO.HITLUGnMBqPTD/yowTwYc3OWH.0E50q"
+
+# Ajouter un utilisateur pour Pierre Dupont
+HSET user:Pers02 user_name "Pierre.Dupont" password "$2a$12$9ni9R85hw6t7YBy6tUeTPuL2U7IaI4qIytHADwBdBlV/Ny.zfcK5W"
+
+# Ajouter un utilisateur pour Marie Lefevre
+HSET user:Pers03 user_name "Marie.Lefevre" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Emily Smith
+HSET user:Pers04 user_name "Emily.Smith" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Michael Johnson
+HSET user:Pers05 user_name "Michael.Johnson" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Carlos Gonzalez
+HSET user:Pers06 user_name "Carlos.Gonzalez" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Hiroshi Tanaka
+HSET user:Pers07 user_name "Hiroshi.Tanaka" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Elena Kuznetsova
+HSET user:Pers08 user_name "Elena.Kuznetsova" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Chen Wei
+HSET user:Pers09 user_name "Chen.Wei" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Emma Jones
+HSET user:Pers10 user_name "Emma.Jones" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Pablo Garcia
+HSET user:Pers11 user_name "Pablo.Garcia" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Yumi Sato
+HSET user:Pers12 user_name "Yumi.Sato" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Sophie Leclerc
+HSET user:Pers13 user_name "Sophie.Leclerc" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Max Müller
+HSET user:Pers14 user_name "Max.Müller" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+# Ajouter un utilisateur pour Maria Rossi
+HSET user:Pers15 user_name "Maria.Rossi" password "$2a$12$VnBiEj3kL.Z.e1cXcnyB4uViv7IGCr/UBPZwEhj2E5eBWTkPXvOZa"
+
+
+--Sessions :
+
+# For Session001
+HSET session:Session001 address_IP "192.168.0.1" token "abc123" device_type "Desktop" user_id "Pers07" is_active "true" user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+# For Session002
+HSET session:Session002 address_IP "192.168.0.2" token "def456" device_type "Mobile" user_id "Pers10" is_active "false" user_agent "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1"
+
+# For Session003
+HSET session:Session003 address_IP "192.168.0.3" token "ghi789" device_type "Tablet" user_id "Pers02" is_active "true" user_agent "Mozilla/5.0 (Linux; Android 11; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Mobile Safari/537.36"
+
+# For Session004
+HSET session:Session004 address_IP "192.168.0.4" token "jkl012" device_type "Desktop" user_id "Pers09" is_active "false" user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+# For Session005
+HSET session:Session005 address_IP "192.168.0.5" token "mno345" device_type "Server" user_id "Pers12" is_active "true" user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+# For Session006
+HSET session:Session006 address_IP "192.168.0.6" token "pqr678" device_type "Server" user_id "Pers11" is_active "true" user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+# For Session007
+HSET session:Session007 address_IP "192.168.0.7" token "stu901" device_type "Mobile" user_id "Pers05" is_active "true" user_agent "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1"
+
+
+
+
